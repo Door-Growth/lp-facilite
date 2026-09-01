@@ -256,7 +256,10 @@
 
   const sendGa4Event = (eventName, payload) => {
     if (typeof window.gtag !== "function") return false;
-    window.gtag("event", eventName, payload);
+    window.gtag("event", eventName, {
+      ...payload,
+      send_to: LP_CONFIG.ga4_id
+    });
     return true;
   };
 
