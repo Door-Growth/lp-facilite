@@ -29,6 +29,11 @@ O JSON do Elementor e as capturas de referência estão preservados em \`referen
 
 A seção de avaliações contém 20 avaliações públicas de cinco estrelas coletadas do perfil correto da Facilite Forro de PVC no Google Maps em 19/08/2026. Foram excluídas avaliações com fotos ou vídeos de serviços anexados. As 13 fotos públicas de perfil utilizadas estão armazenadas localmente em \`assets/reviews/avatars\`; os 7 perfis sem fotografia pública são representados por avatar neutro com a inicial do nome.
 
+## Tracking
+
+O Google Analytics 4 (\`G-7RE062GDFF\`) e o Google Ads (\`AW-11287880689\`) são carregados diretamente pelo Google Tag (\`gtag.js\`), sem Google Tag Manager. Toda a lógica da landing page está centralizada em \`js/tracking.js\` e cobre visualização, scroll, vídeos HTML5 e conversões de clique no WhatsApp. Logs técnicos só aparecem quando a URL contém \`debug_mode=true\`.
+
 ## Restrições
 
-Não são utilizados WordPress, Elementor, frameworks, bibliotecas, gerenciadores de pacotes, dependências externas ou ferramentas de rastreamento.
+Não são utilizados WordPress, Elementor, frameworks, bibliotecas, gerenciadores de pacotes ou dependências de aplicação. O tracking utiliza apenas o Google Tag direto, sem Google Tag Manager.
+
