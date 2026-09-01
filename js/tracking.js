@@ -11,6 +11,7 @@
     google_ads_id: "AW-11287880689",
     google_ads_conversion: "AW-11287880689/DRV5CMq79-scEPHHvYYq",
     ga4_main_event: "generate_lead",
+    tracking_version: "20260901-4",
     business_city: "",
     business_state: "",
     campaign_region: ""
@@ -428,8 +429,32 @@
   };
 
   const wasLeadRecentlySent = () => {
-    const lastSent = Number(storageGet(localStore, leadLockKey));
+    const storedLock = storageGet(localStore, leadLockKey);
+    if (!storedLock) return false;
+
+    let lockData;
+    try {
+      lockData = JSON.parse(storedLock);
+    } catch {
+      return false;
+    }
+
+    if (!lockData
+      || typeof lockData !== "object"
+      || lockData.tracking_version !== LP_CONFIG.tracking_version) {
+      debugLog("Legacy lead lock ignored");
+      return false;
+    }
+
+    const lastSent = Number(lockData.timestamp);
     return Number.isFinite(lastSent) && lastSent > 0 && (Date.now() - lastSent) < leadLockDuration;
+  };
+
+  const storeLeadLock = () => {
+    storageSet(localStore, leadLockKey, JSON.stringify({
+      timestamp: Date.now(),
+      tracking_version: LP_CONFIG.tracking_version
+    }));
   };
 
   const trackWhatsAppLead = ({ destinationUrl, buttonText, buttonLocation }) => {
@@ -460,7 +485,7 @@
       return true;
     }
 
-    storageSet(localStore, leadLockKey, Date.now());
+    storeLeadLock();
     let redirected = false;
     const redirect = () => {
       if (redirected) return;
