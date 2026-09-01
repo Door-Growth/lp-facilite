@@ -243,7 +243,8 @@
       campaign_region: LP_CONFIG.campaign_region,
       max_scroll_percent: maxScrollPercent,
       time_on_page_seconds: Math.max(0, Math.round((Date.now() - pageStartedAt) / 1000)),
-      page_visibility: document.visibilityState
+      page_visibility: document.visibilityState,
+      debug_mode: debugMode ? true : undefined
     });
 
     if (!commonDataLogged) {
